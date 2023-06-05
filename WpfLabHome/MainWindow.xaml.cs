@@ -11,11 +11,16 @@ using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using SlideShowSecond;
+using System.Windows.Input;
 
 namespace SlideShowMain
 {
+
     public partial class MainWindow : System.Windows.Window
     {
+        public static RoutedCommand OpenFolderDialogCommand = new RoutedCommand();
+        public static RoutedCommand AboutCommand = new RoutedCommand();
+
         public ObservableCollection<DirectoryItem> Drives { get; set; }
         public ObservableCollection<ImageFileItem> ImageFiles { get; set; }
         public string SelectedFolderPath { get; set; }
@@ -29,6 +34,7 @@ namespace SlideShowMain
 
         public MainWindow()
         {
+            OpenFolderDialogCommand.InputGestures.Add(new KeyGesture(Key.F2, ModifierKeys.Alt));
             InitializeComponent();
 
             Drives = new ObservableCollection<DirectoryItem>();

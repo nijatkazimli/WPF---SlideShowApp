@@ -8,7 +8,17 @@
         Title="Image Slideshow Sample App"
         Height="600" Width="800"
         MinHeight="600" MinWidth="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="/icon.png">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.OpenFolderDialogCommand}" Executed="OpenFolderMenuItemClick" />
+        <CommandBinding x:Name="Auye" Command="{x:Static local:MainWindow.AboutCommand}" Executed="AboutMenuItemClick" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Key="F2" Modifiers="Ctrl" Command="{x:Static local:MainWindow.OpenFolderDialogCommand}" />
+        <KeyBinding Key="F1" Modifiers="" Command="{x:Static local:MainWindow.AboutCommand}" />
+    </Window.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -118,9 +128,9 @@
         <!-- Menu -->
         <Menu x:Name="Menu" Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Header="Open Folder" Click="OpenFolderMenuItemClick" />
+                <MenuItem Header="Open Folder" Click="OpenFolderMenuItemClick" InputGestureText="Alt+F2"/>
                 <Separator />
-                <MenuItem Header="Exit" Click="ExitMenuItemClick" />
+                <MenuItem Header="Exit" Click="ExitMenuItemClick" InputGestureText="Alt+F4"/>
             </MenuItem>
             <MenuItem Name="SlideShowMenuItem" IsEnabled="False" Header="Start slideshow" DisplayMemberPath="Name">
                 <MenuItem.ItemContainerStyle>
