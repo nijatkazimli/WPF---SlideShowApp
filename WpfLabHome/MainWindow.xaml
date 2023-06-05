@@ -1,0 +1,135 @@
+﻿<Window x:Class="SlideShowMain.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SlideShowMain"
+        mc:Ignorable="d"
+        Title="Image Slideshow Sample App"
+        Height="600" Width="800"
+        MinHeight="600" MinWidth="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Explorer -->
+            <ScrollViewer Grid.Column="0" BorderBrush="Black" BorderThickness="3" VerticalScrollBarVisibility="Auto">
+                <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <ScrollViewer Width="170" Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                            <Expander Header="Explorer" Width="150" IsExpanded="True" Margin="5,5,5,0">
+                                <TreeView x:Name="DirectoryTreeView" SelectedItemChanged="DirectoryTreeView_SelectedItemChanged"
+                                          ItemsSource="{Binding Drives}"
+                                          Background="LightGray" Margin="0,5,0,0"
+                                          BorderBrush="Black" BorderThickness="1">
+                                    <TreeView.ItemContainerStyle>
+                                        <Style TargetType="TreeViewItem">
+                                            <EventSetter Event="Expanded" Handler="TreeViewItem_Expanded" />
+                                        </Style>
+                                    </TreeView.ItemContainerStyle>
+                                    <TreeView.ItemTemplate>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding Directories}">
+                                            <TextBlock Text="{Binding Name}" />
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.ItemTemplate>
+                                </TreeView>
+                            </Expander>
+                        </ScrollViewer>
+
+                        <!-- File info -->
+                        <Expander Header="File info" x:Name="FileInfoExpander" Grid.Row="1" Width="150" IsExpanded="False" Margin="5">
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5">
+                                <TextBlock x:Name="FileInfoTextBlock" Text="No file selected!" Width="150" Padding="10"
+                                           TextAlignment="Center" Background="LightGray" />
+                            </Border>
+                        </Expander>
+
+                        <!-- Slideshow -->
+                        <Expander Header="Slideshow" x:Name="SlideShowExpander" Grid.Row="2" Width="150" IsExpanded="False" Margin="5,0,5,5">
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="0,5,0,5" Background="LightGray">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Select slideshow effect:" FontWeight="Bold" Grid.Row="0" Margin="2" />
+                                    <ComboBox Grid.Row="1" Margin="5" Name="EffectsComboBox" SelectionChanged="ComboBox_SelectionChanged"
+                                              IsEnabled="False" DisplayMemberPath="Name" />
+                                    <Button Grid.Row="2" Margin="5" IsEnabled="False" Name="StartSlideShowButtonUnderComboBox" Content="Start slideshow"
+                                            Click="StartSlideShowButtonUnderComboBox_Click" />
+                                </Grid>
+                            </Border>
+                        </Expander>
+                    </Grid>
+                </Border>
+            </ScrollViewer>
+
+            <!-- Image List -->
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Margin="5">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding ImageFiles}" SelectionChanged="ListView_SelectionChanged"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="1" Margin="10,5,10,5" Background="White">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="3" BlurRadius="7" Direction="340" Opacity="0.5" />
+                                    </Border.Effect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Image Source="{Binding Thumbnail}" Width="120" Height="80" Stretch="UniformToFill" Margin="10"
+                                               Grid.Row="0" />
+                                        <TextBlock Text="{Binding FileName}" TextAlignment="Center" MaxWidth="120" Padding="5" TextWrapping="Wrap"
+                                                   Grid.Row="1" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- Menu -->
+        <Menu x:Name="Menu" Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Open Folder" Click="OpenFolderMenuItemClick" />
+                <Separator />
+                <MenuItem Header="Exit" Click="ExitMenuItemClick" />
+            </MenuItem>
+            <MenuItem Name="SlideShowMenuItem" IsEnabled="False" Header="Start slideshow" DisplayMemberPath="Name">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <EventSetter Event="Click" Handler="EffectMenuItemClick" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+            <MenuItem Header="About" Click="AboutMenuItemClick" />
+        </Menu>
+    </Grid>
+</Window>
