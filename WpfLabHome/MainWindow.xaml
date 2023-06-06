@@ -16,7 +16,7 @@
     </Window.CommandBindings>
 
     <Window.InputBindings>
-        <KeyBinding Key="F2" Modifiers="Ctrl" Command="{x:Static local:MainWindow.OpenFolderDialogCommand}" />
+        <KeyBinding Key="F2" Modifiers="Alt" Command="{x:Static local:MainWindow.OpenFolderDialogCommand}" />
         <KeyBinding Key="F1" Modifiers="" Command="{x:Static local:MainWindow.AboutCommand}" />
     </Window.InputBindings>
 

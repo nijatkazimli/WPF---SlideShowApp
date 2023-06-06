@@ -34,7 +34,6 @@ namespace SlideShowMain
 
         public MainWindow()
         {
-            OpenFolderDialogCommand.InputGestures.Add(new KeyGesture(Key.F2, ModifierKeys.Alt));
             InitializeComponent();
 
             Drives = new ObservableCollection<DirectoryItem>();
