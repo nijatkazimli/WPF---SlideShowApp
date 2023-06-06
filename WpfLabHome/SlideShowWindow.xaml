@@ -10,4 +10,10 @@
         <Image x:Name="previousImageControl" Stretch="Fill" Opacity="1" Height="768" Width="1024" />
         <Image x:Name="currentImageControl" Stretch="Fill" Opacity="1" Height="768" Width="1024"/>
     </Canvas>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:SlideShowWindow.PlayPauseCommand}" Executed="PlayPause_Click" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Space" Command="{x:Static local:SlideShowWindow.PlayPauseCommand}" />
+    </Window.InputBindings>
 </Window>

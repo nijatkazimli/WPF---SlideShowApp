@@ -14,6 +14,7 @@ namespace SlideShowSecond
     /// </summary>
     public partial class SlideShowWindow : Window
     {
+        public static RoutedCommand PlayPauseCommand = new RoutedCommand();
         private System.Windows.Threading.DispatcherTimer timer;
         private bool isPaused = false;
         private ObservableCollection<ImageFileItem> imageFiles;
@@ -34,7 +35,9 @@ namespace SlideShowSecond
             ContextMenu contextMenu = new ContextMenu();
             MenuItem playPauseMenuItem = new MenuItem { Header = "Play/Pause Slideshow" };
             playPauseMenuItem.Click += PlayPause_Click;
+            playPauseMenuItem.InputGestureText = "Space";
             MenuItem stopMenuItem = new MenuItem { Header = "Stop Slideshow" };
+            stopMenuItem.InputGestureText = "Alt+F4";
             stopMenuItem.Click += Stop_Click;
             contextMenu.Items.Add(playPauseMenuItem);
             contextMenu.Items.Add(stopMenuItem);
