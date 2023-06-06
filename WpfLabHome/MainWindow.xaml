@@ -12,7 +12,7 @@
         Icon="/icon.png">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.OpenFolderDialogCommand}" Executed="OpenFolderMenuItemClick" />
-        <CommandBinding x:Name="Auye" Command="{x:Static local:MainWindow.AboutCommand}" Executed="AboutMenuItemClick" />
+        <CommandBinding Command="{x:Static local:MainWindow.AboutCommand}" Executed="AboutMenuItemClick" />
     </Window.CommandBindings>
 
     <Window.InputBindings>

@@ -14,6 +14,7 @@ namespace SlideShowSecond
     /// </summary>
     public partial class SlideShowWindow : Window
     {
+        private System.Windows.Threading.DispatcherTimer timer;
         private bool isPaused = false;
         private ObservableCollection<ImageFileItem> imageFiles;
         private int currentIndex = 0;
@@ -26,7 +27,6 @@ namespace SlideShowSecond
             this.imageFiles = imageFiles;
             this.currentSlideShowEffect = slideshowEffect;
             InitializeSlideshow();
-
         }
 
         private void InitializeContextMenu()
@@ -47,7 +47,7 @@ namespace SlideShowSecond
             currentImageControl.Source = imageFiles[0].Thumbnail;
             currentSlideShowEffect.PlaySlideshow(previousImageControl, currentImageControl, Frame.ActualWidth, Frame.ActualHeight);
 
-            var timer = new System.Windows.Threading.DispatcherTimer();
+            timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(4);
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -69,11 +69,13 @@ namespace SlideShowSecond
             if (isPaused)
             {
                 currentSlideShowEffect.Play();
+                timer.Start();
                 isPaused = false;
             }
             else
             {
                 currentSlideShowEffect.Pause();
+                timer.Stop();
                 isPaused = true;
             }
         }
